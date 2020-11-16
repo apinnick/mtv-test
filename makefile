@@ -9,13 +9,13 @@ clean: all-clean
 browser: all-browser
 
 all-html:
-	cd doc-mtv_2.0 && $(MAKE) html
+	cd doc-mtv && $(MAKE) html
 
 all-pdf:
-	cd doc-mtv_2.0 && $(MAKE) pdf
+	cd doc-mtv && $(MAKE) pdf
 
 all-clean:
-	cd doc-mtv_2.0 && $(MAKE) clean
+	cd doc-mtv && $(MAKE) clean
 
 all-browser:
-	cd doc-mtv_2.0 && $(MAKE) browser
+	cd doc-mtv && $(MAKE) browser

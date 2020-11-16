@@ -3,7 +3,7 @@
 // doc-mtv_2.0/master.adoc
 
 [id="adding-vddk-to-mtv_{context}"]
-= Adding a VDDK image to {mtv-short}
+= Adding a VDDK image to {product-short}
 
 You can create a VDDK image and store it in a private image registry. Then, you can add the image to the `v2v-vmware` ConfigMap.
 

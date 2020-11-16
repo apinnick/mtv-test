@@ -5,10 +5,4 @@
 <abstract>
     <para>This guide describes how to migrate VMware virtual machines to Red Hat OpenShift Virtualization.</para>
 </abstract>
-<authorgroup id="Author_Group">
-        <author>
-                <firstname>Red Hat Modernization and Migration</firstname>
-                <surname>Documentation Team</surname>
-                <email>migration-docs@redhat.com</email>
-        </author>
-</authorgroup>
+<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />

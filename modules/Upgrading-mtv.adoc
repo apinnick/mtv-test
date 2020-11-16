@@ -3,7 +3,7 @@
 // doc-mtv_2.0/master.adoc
 
 [id="upgrading-mtv_{context}"]
-= Upgrading the {mtv-full} - to do
+= Upgrading the {product-full} - to do
 
 TBD
 

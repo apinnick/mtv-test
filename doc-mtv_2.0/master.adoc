@@ -1,18 +1,18 @@
-= Migration Toolkit for Virtualization
-:imagesdir: images
-:vernum: 2.0
 :toc: left
 :toclevels: 3
 :numbered!:
 :compat-mode:
 :experimental:
+:build: upstream
+include::modules/attributes.adoc[]
 :context: mtv
 :mtv:
-include::modules/_mtv-document-attributes.adoc[]
 
-The {mtv-first} enables you to migrate a large number of virtual machines from VMware vSphere to {virt}.
+= {product-full}
 
-You can download the VMware provider data collected by {mtv-short} and upload it to the Migration Analytics service on link:https://cloud.redhat.com/migrations/migration-analytics[cloud.redhat.com] for a detailed workload analysis report and migration recommendations.
+{product-first} enables you to migrate a large number of virtual machines from VMware vSphere to {virt}.
+
+You can download the VMware provider data collected by {product-short} and upload it to the Migration Analytics service on link:https://cloud.redhat.com/migrations/migration-analytics[cloud.redhat.com] for a detailed workload analysis report and migration recommendations.
 
 include::modules/About-mtv.adoc[leveloffset=+1]
 
@@ -21,11 +21,11 @@ include::modules/About-mtv.adoc[leveloffset=+1]
 
 TBD
 
-== Installing the {mtv-full}
+== Installing {product-full}
 
-You can install the {mtv-first} by using the {virt} web console or the CLI.
+You can install {product-first} by using the {virt} web console or the CLI.
 
-Then you can create a VMware Virtual Disk Development Kit (VDDK) image. {mtv-short} uses VDDK to copy the source disks.
+Then you can create a VMware Virtual Disk Development Kit (VDDK) image. {product-short} uses VDDK to copy the source disks.
 
 include::modules/Installing-mtv-console.adoc[leveloffset=+2]
 include::modules/Installing-mtv-cli.adoc[leveloffset=+2]
@@ -53,7 +53,7 @@ include::modules/Adding-provider.adoc[leveloffset=+4]
 include::modules/Adding-provider.adoc[leveloffset=+4]
 :vmware-provider!:
 :mtv:
-// include::modules/Selecting-migration-network.adoc[leveloffset=+3]
+include::modules/Selecting-migration-network.adoc[leveloffset=+3]
 
 [id="creating-mappings_{context}"]
 ==== Creating mappings
@@ -70,7 +70,7 @@ include::modules/Creating-mappings.adoc[leveloffset=+4]
 include::modules/Creating-mappings.adoc[leveloffset=+4]
 :mtv-storage!:
 :mtv:
-// include::modules/Creating-hooks.adoc[leveloffset=+2]
+include::modules/Creating-hooks.adoc[leveloffset=+2]
 include::modules/Creating-migration-plan.adoc[leveloffset=+3]
 include::modules/Running-migration-plan.adoc[leveloffset=+3]
 
@@ -96,4 +96,4 @@ include::modules/Exporting-migration-analytics-report.adoc[leveloffset=+2]
 include::modules/Collecting-logs.adoc[leveloffset=+2]
 include::modules/Known-issues.adoc[leveloffset=+2]
 
-:mtv!:
+:downstream!:

@@ -3,9 +3,9 @@
 // doc-mtv_2.0/master.adoc
 
 [id="installing-mtv-cli_{context}"]
-= Installing {mtv-short} from the CLI
+= Installing {product-short} from the CLI
 
-You can install the {mtv-full} from the CLI.
+You can install the {product-full} from the CLI.
 
 .Prerequisites
 

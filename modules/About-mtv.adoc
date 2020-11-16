@@ -3,7 +3,7 @@
 // * doc-mtv_2.0/master.adoc
 
 [id="about-mtv_{context}"]
-= About the {mtv-full}
+= About the {product-full}
 
 Placeholder for diagram
 // architecture diagram
@@ -11,7 +11,7 @@ Placeholder for diagram
 [discrete]
 == Custom resources
 
-{mtv-short} creates the following custom resources (CRs).
+{product-short} creates the following custom resources (CRs).
 
 Provider::
 * Created when you add a source or target provider
@@ -31,7 +31,7 @@ If a virtual machine fails to migrate, you can run a new migration with the same
 [discrete]
 == Services
 
-{mtv-short} creates the following services.
+{product-short} creates the following services.
 
 Provider Inventory::
 * Connects to the source and target providers
@@ -42,7 +42,7 @@ Validation::
 * Triggered by the Provider Inventory service whenever a VM configuration change is detected
 * Stores the VM validation statusvdd
 User Interface::
-* Enables you to manipulate the {mtv-short} CRs
+* Enables you to manipulate the {product-short} CRs
 * Indicates the state of the CRs
 * Displays the progress of a migration
 Controller::

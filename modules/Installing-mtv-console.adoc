@@ -3,9 +3,9 @@
 // doc-mtv_2.0/master.adoc
 
 [id="installing-mtv-console_{context}"]
-= Installing {mtv-short} with the web console
+= Installing {product-short} with the web console
 
-You can install the {mtv-first} by using the {virt} web console.
+You can install the {product-first} by using the {virt} web console.
 
 .Prerequisites
 
@@ -14,13 +14,13 @@ You can install the {mtv-first} by using the {virt} web console.
 .Procedure
 
 . In the {virt} web console, click *Operators* -> *OperatorHub*.
-. Use the *Filter by keyword* field to find the *{mtv-short} Operator*.
-. Select the *{mtv-short} Operator* and click *Install*.
+. Use the *Filter by keyword* field to find the *{product-short} Operator*.
+. Select the *{product-short} Operator* and click *Install*.
 . On the *Install Operator* page, click *Install*.
 +
-On the *Installed Operators* page, the *{mtv-short} Operator* appears in the *openshift-migration* project with the status *Succeeded*.
+On the *Installed Operators* page, the *{product-short} Operator* appears in the *openshift-migration* project with the status *Succeeded*.
 
-. Click *{mtv-short} Operator*.
+. Click *{product-short} Operator*.
 . Under *Provided APIs*, locate the *VirtController* tile, and click *Create Instance*.
 . Click *Create*.
 . Click *Workloads* -> *Pods* to verify that the Provider Inventory, Validation, User Interface, and Controller pods are running.

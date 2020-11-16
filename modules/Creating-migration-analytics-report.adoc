@@ -5,7 +5,7 @@
 [id="creating-migration-analytics-report_{context}"]
 = Creating a Migration Analytics report
 
-You can download VMware provider data in the {mtv-short} web console and upload it to the Migration Analytics service on link:https://cloud.redhat.com/migrations/migration-analytics[cloud.redhat.com] to create a Migration Analytics report.
+You can download VMware provider data in the {product-short} web console and upload it to the Migration Analytics service on link:https://cloud.redhat.com/migrations/migration-analytics[cloud.redhat.com] to create a Migration Analytics report.
 
 .Procedure
 

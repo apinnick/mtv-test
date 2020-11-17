@@ -4,12 +4,13 @@ ROOTDIR = $(realpath .)
 NAME = $(notdir $(ROOTDIR))
 DEST_DIR = $(BUILD_DIR)/$(NAME)
 DEST_HTML = $(DEST_DIR)/index-$(BUILD).html
-# DEST_HTML_13 = $(DEST_DIR)/index-$(BUILD)-13.html
+DEST_HTML_13 = $(DEST_DIR)/index-$(BUILD)-13.html
 DEST_PDF = $(BUILD_DIR)/$(NAME)-$(BUILD).pdf
 IMAGES_DIR = $(DEST_DIR)/images
 IMAGES_TS = $(DEST_DIR)/.timestamp-images
 SOURCES = master.adoc
-IMAGES = $(shell find ./images -type f)
+# IMAGES = $(shell find ./images -type f)
+IMAGES = $(shell find ../images -type f 2>/dev/null || true)
 UNAME = $(shell uname)
 
 ifeq ($(UNAME), Linux)
@@ -42,7 +43,6 @@ open-pdf: pdf
 
 $(IMAGES_TS): $(IMAGES)
 	cp $? $(IMAGES_DIR)/
-	# pushd "$(IMAGES_DIR)" && for IMG in *.*; do ln -s ../../images/$$IMG ../common/images/$$IMG; done && popd
 	touch $(IMAGES_TS)
 
 $(DEST_HTML): $(SOURCES)

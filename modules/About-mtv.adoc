@@ -3,7 +3,7 @@
 // * doc-mtv/master.adoc
 
 [id="about-mtv_{context}"]
-= About the {product-full}
+= About {product-full}
 
 Placeholder for diagram
 // architecture diagram

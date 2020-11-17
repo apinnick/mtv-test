@@ -36,7 +36,7 @@ rm -rf images/
 # If your project *is* Jekyll, then this doesn't apply to you...
 echo "--- moving built files into the top-level directory"
 touch .nojekyll
-mv build/doc-MTV/* ./
+mv build/doc-mtv/* ./
 mv index-upstream.html index.html
 rm -rf build/
 

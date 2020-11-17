@@ -1,6 +1,6 @@
 // Module included in the following assemblies:
 //
-// * doc-mtv_2.0/master.adoc
+// * doc-mtv/master.adoc
 
 [id="about-mtv_{context}"]
 = About the {product-full}
@@ -25,7 +25,7 @@ Mapping::
 Migration::
 * Created when you run a migration plan
 * Aggregates the migration progress
-+  
++
 If a virtual machine fails to migrate, you can run a new migration with the same migration plan. Only the virtual machines that have not migrated will be migrated.
 
 [discrete]
@@ -47,7 +47,7 @@ User Interface::
 * Displays the progress of a migration
 Controller::
 * Implements the logic to reconcile the CRs with the state defined by the user
-+  
++
 For example, when you create a Plan, the controllers validate it and add a status label. If a Plan fails validation, its status is `Not ready` and the Plan cannot be used to perform a migration.
 
 * Aggregate the status of related CRs to provide a holistic and consistent view of the state of a migration

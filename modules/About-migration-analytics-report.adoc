@@ -1,6 +1,6 @@
 // Module included in the following assemblies:
 //
-// doc-mtv_2.0/master.adoc
+// doc-mtv/master.adoc
 
 [id="about-migration-analytics-report_{context}"]
 = About the Migration Analytics report

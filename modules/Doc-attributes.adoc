@@ -10,8 +10,9 @@ ifeval::["{build}" == "upstream"]
 :product-full: Forklift
 :product-first: Forklift
 :product-version: 2.0
-:ocp: OpenShift
-:virt: OpenShift Virtualization
+:ocp: OpenShift{nbsp}Kubernetes{nbsp}Engine
+:ocp-short: OKD
+:virt: KubeVirt
 :ocp-version: 4.6
 endif::[]
 ifeval::["{build}" == "downstream"]

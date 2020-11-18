@@ -13,16 +13,16 @@ Placeholder for diagram
 
 {product-short} creates the following custom resources (CRs).
 
-Provider::
+`Provider` CR::
 * Created when you add a source or target provider
 * Stores provider attributes in order to connect to and interact with the providers
-Plan::
+`Plan` CR::
 * Created when you create a migration plan
 * Contains a list of VMs that are migrated together with the same migration parameters
 * Selects VMs to fit the available migration resources until all VMs are migrated
-Mapping::
+`Mapping` CR::
 * Created when you map source and target networks or source and target storage
-Migration::
+`Migration` CR::
 * Created when you run a migration plan
 * Aggregates the migration progress
 +
@@ -40,7 +40,7 @@ Provider Inventory::
 Validation::
 * Validates the suitability of a VM for migration to {virt} by applying rules
 * Triggered by the Provider Inventory service whenever a VM configuration change is detected
-* Stores the VM validation statusvdd
+* Stores the VM validation status
 User Interface::
 * Enables you to manipulate the {product-short} CRs
 * Indicates the state of the CRs
@@ -48,6 +48,6 @@ User Interface::
 Controller::
 * Implements the logic to reconcile the CRs with the state defined by the user
 +
-For example, when you create a Plan, the controllers validate it and add a status label. If a Plan fails validation, its status is `Not ready` and the Plan cannot be used to perform a migration.
+For example, when you create a `Plan` CR, the controller validates it and add a status label. If a `Plan` CR fails validation, its status is `Not ready` and it cannot be used to perform a migration.
 
 * Aggregate the status of related CRs to provide a holistic and consistent view of the state of a migration

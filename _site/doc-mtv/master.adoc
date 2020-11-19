@@ -1,0 +1,99 @@
+:toc: left
+:toclevels: 3
+:numbered!:
+:compat-mode:
+:experimental:
+:build: upstream
+include::modules/Doc-attributes.adoc[]
+:context: mtv
+:mtv:
+
+= {product-full}
+
+{product-first} enables you to migrate a large number of virtual machines from VMware vSphere to {virt}.
+
+You can download the VMware provider data collected by {product-short} and upload it to the Migration Analytics service on link:https://cloud.redhat.com/migrations/migration-analytics[cloud.redhat.com] for a detailed workload analysis report and migration recommendations.
+
+include::modules/About-mtv.adoc[leveloffset=+1]
+
+[id="planning-the-migration_{context}"]
+== Planning the migration - to do
+
+TBD
+
+== Installing {product-full}
+
+You can install {product-first} by using the {virt} web console or the CLI.
+
+Then you can create a VMware Virtual Disk Development Kit (VDDK) image. {product-short} uses VDDK to copy the source disks.
+
+include::modules/Installing-mtv-console.adoc[leveloffset=+2]
+include::modules/Installing-mtv-cli.adoc[leveloffset=+2]
+include::modules/Adding-vddk-to-mtv.adoc[leveloffset=+2]
+
+// include::modules/Upgrading-mtv.adoc[leveloffset=+1]
+
+[id="migrating-virtual-machines_{context}"]
+== Migrating virtual machines
+
+You can migrate virtual machines with the web console or from the CLI.
+
+[id="migrating-virtual-machines-in-the-web-console_{context}"]
+=== Migrating virtual machines with the web console
+
+You can add providers, create network and storage mappings, and create and run a migration plan in the web console.
+
+[id="adding-providers_{context}"]
+==== Adding providers
+
+include::modules/Adding-provider.adoc[leveloffset=+4]
+:mtv!:
+:context: vmware-provider
+:vmware-provider:
+include::modules/Adding-provider.adoc[leveloffset=+4]
+:vmware-provider!:
+:mtv:
+include::modules/Selecting-migration-network.adoc[leveloffset=+3]
+
+[id="creating-mappings_{context}"]
+==== Creating mappings
+
+You must create mappings to map the source and target networks and storage.
+
+:mtv!:
+:context: mtv-network
+:mtv-network:
+include::modules/Creating-mappings.adoc[leveloffset=+4]
+:mtv-network!:
+:context: mtv-storage
+:mtv-storage:
+include::modules/Creating-mappings.adoc[leveloffset=+4]
+:mtv-storage!:
+:mtv:
+include::modules/Creating-hooks.adoc[leveloffset=+2]
+include::modules/Creating-migration-plan.adoc[leveloffset=+3]
+include::modules/Running-migration-plan.adoc[leveloffset=+3]
+
+include::modules/Migrating-virtual-machines-cli.adoc[leveloffset=+2]
+
+[id="using-migration-analytics_{context}"]
+== Analyzing your workloads with Migration Analytics
+
+You can use the Migration Analytics service at link:https://cloud.redhat.com[cloud.redhat.com] to analyze your VMware workloads and to provide migration recommendations.
+
+Migration Analytics generates a report that you can view in your browser or download as a CSV file.
+
+include::modules/About-migration-analytics-report.adoc[leveloffset=+2]
+include::modules/Creating-migration-analytics-report.adoc[leveloffset=+2]
+[discrete]
+include::modules/Filtering-migration-analytics-report.adoc[leveloffset=+2]
+[discrete]
+include::modules/Exporting-migration-analytics-report.adoc[leveloffset=+2]
+
+[id="troubleshooting_{context}"]
+== Troubleshooting
+
+include::modules/Collecting-logs.adoc[leveloffset=+2]
+include::modules/Known-issues.adoc[leveloffset=+2]
+
+:downstream!:

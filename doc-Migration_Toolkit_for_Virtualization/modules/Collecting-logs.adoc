@@ -1,0 +1,19 @@
+// Module included in the following assemblies:
+//
+// doc-mtv_2.0/master.adoc
+
+[id="collecting-logs_{context}"]
+= Collecting logs - to do
+
+TBD
+
+[discrete]
+== Prerequisites
+
+
+[discrete]
+== Procedure
+
+
+[discrete]
+== Additional resources

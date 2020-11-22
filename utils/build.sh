@@ -32,10 +32,10 @@ build_for_release() {
     release="${2}"
     extraargs="${3}"
 
-    echo "Building documentation doc ${doc} for release ${release}"
+    echo "Building document ${doc} for release ${release}"
 
-    basedir=$(dirname $(readlink "documentation/${doc}.adoc"))
-    basefile=$(basename $(readlink "documentation/${doc}.adoc"))
+    basedir=$(dirname $(readlink "documentation/${doc}"))
+    basefile=$(basename $(readlink "documentation/${doc}/master.adoc"))
 
     # Build the documentation
     asciidoctor -a release="${release}" -a toc=left ${extraargs} -b xhtml5 -d book -B "documentation/${basedir}/" "documentation/${basedir}/${basefile}" -o "${doc}.html" -D "../../website/${release}" 2>&1 | grep -v 'Try: gem'

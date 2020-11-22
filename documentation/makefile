@@ -10,7 +10,7 @@ IMAGES_DIR = $(DEST_DIR)/images
 IMAGES_TS = $(DEST_DIR)/.timestamp-images
 SOURCES = master.adoc
 # IMAGES = $(shell find ./images -type f)
-IMAGES = $(shell find images -type f 2>/dev/null || true)
+IMAGES = $(shell find ./images -type f 2>/dev/null || true)
 UNAME = $(shell uname)
 
 ifeq ($(UNAME), Linux)

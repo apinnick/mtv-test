@@ -28,7 +28,7 @@ jobs:
       - name: Build & Deploy to GitHub Pages
         uses: apinnick/jekyll-deploy@main
         with:
-          source-dir: doc-mtv/
+          source-dir: documentation/doc-Migration_Toolkit_for_Virtualization
         env:
           JEKYLL_ENV: production
           GH_PAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}

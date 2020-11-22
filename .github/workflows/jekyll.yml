@@ -22,5 +22,5 @@ jobs:
           ${{ runner.os }}-gems-
     - uses: apinnick/gh-pages-jekyll-action@1.0
       env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
         SOURCE_FOLDER: website

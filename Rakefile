@@ -1,4 +1,3 @@
-
 #encoding: utf-8
 desc 'Generate documentation for MTV'
 task :default do

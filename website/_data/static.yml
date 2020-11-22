@@ -1,6 +1,6 @@
 
-Migration Toolkit for Virtualization-2.0:
-    name: Migration Toolkit for Virtualization
+doc-Migration_Toolkit_for_Virtualization-2.0:
+    name: doc-Migration_Toolkit_for_Virtualization
     release: 2.0
-    folder: latest/Migration Toolkit for Virtualization
+    folder: latest/doc-Migration_Toolkit_for_Virtualization
     

@@ -1,6 +1,7 @@
 // Module included in the following assemblies:
 //
-// doc-mtv_2.0/master.adoc
+// * documentation/doc-Forklift/assemblies/assembly_installing-mtv.adoc
+// * documentation/doc-Migration_Toolkit_for_Virtualization/assemblies/assembly_installing-mtv.adoc
 
 [id="adding-vddk-to-mtv_{context}"]
 = Adding a VDDK image to {project-short}
@@ -85,4 +86,3 @@ $ oc edit configmap v2v-vmware -n openshift-cnv
 data:
   vddk-init-image: <registry_route_or_server_path>/vddk:<tag>
 ----
-

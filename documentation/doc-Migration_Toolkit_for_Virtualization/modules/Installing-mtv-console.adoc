@@ -1,6 +1,7 @@
 // Module included in the following assemblies:
 //
-// doc-mtv_2.0/master.adoc
+// * documentation/doc-Forklift/assemblies/assembly_installing-mtv.adoc
+// * documentation/doc-Migration_Toolkit_for_Virtualization/assemblies/assembly_installing-mtv.adoc
 
 [id="installing-mtv-console_{context}"]
 = Installing {project-short} with the web console

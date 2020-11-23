@@ -1,6 +1,7 @@
 // Module included in the following assemblies:
 //
-// * doc-mtv_2.0/master.adoc
+// * documentation/doc-Forklift/master.adoc
+// * documentation/doc-Migration_Toolkit_for_Virtualization/master.adoc
 
 [id="about-mtv_{context}"]
 = About {project-full}
@@ -8,8 +9,7 @@
 Placeholder for diagram
 // architecture diagram
 
-[discrete]
-== Custom resources
+.Custom resources
 
 {project-short} creates the following custom resources (CRs):
 
@@ -30,8 +30,7 @@ Placeholder for diagram
 +
 If a virtual machine fails to migrate, you can run a new migration with the same migration plan. Only the virtual machines that have not migrated will be migrated.
 
-[discrete]
-== Services
+.Services
 
 {project-short} creates the following services:
 

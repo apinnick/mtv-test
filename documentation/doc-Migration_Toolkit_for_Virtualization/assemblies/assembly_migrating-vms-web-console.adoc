@@ -39,38 +39,24 @@ You can add providers, create network and storage mappings, and create and run a
 [id="adding-providers_{context}"]
 == Adding providers
 
-You must add an {virt} and a VMware provider in the web console.
+You must add the {virt} and VMware providers in the web console.
 
-:migrating-vms-web-console!:
-:context: virt-provider
-:virt-provider:
-include::../modules/Adding-provider.adoc[leveloffset=+2]
-:virt-provider!:
-:context: vmware-provider
-:vmware-provider:
-include::../modules/Adding-provider.adoc[leveloffset=+2]
-:vmware-provider!:
-:migrating-vms-web-console:
+include::../modules/Adding-virt-provider.adoc[leveloffset=+2]
+include::../modules/Adding-vmware-provider.adoc[leveloffset=+2]
+
 [id="creating-mappings_{context}"]
 == Creating mappings
 
 You must create mappings to map the source and target networks and storage.
 
-:migrating-vms-web-console!:
-:context: network
-:network:
-include::../modules/Creating-mappings.adoc[leveloffset=+2]
-:network!:
-:context: storage
-:storage:
-include::../modules/Creating-mappings.adoc[leveloffset=+2]
-:storage!:
-:migrating-vms-web-console:
+include::../modules/Creating-network-mapping.adoc[leveloffset=+2]
+include::../modules/Creating-storage-mapping.adoc[leveloffset=+2]
+
 // include::../modules/Creating-hooks.adoc[leveloffset=+2]
 include::../modules/Creating-migration-plan.adoc[leveloffset=+1]
 include::../modules/Running-migration-plan.adoc[leveloffset=+1]
 
 // include::../modules/Migrating-virtual-machines-cli.adoc[leveloffset=+1]
 // include::../modules/Selecting-migration-network.adoc[leveloffset=+3]
-:migrating-vms-web-console!:
+
 :context: {parent-context-of-migrating-vms-web-console}

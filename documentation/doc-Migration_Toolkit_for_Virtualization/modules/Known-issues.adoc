@@ -1,6 +1,7 @@
 // Module included in the following assemblies:
 //
-// * doc-mtv-2.0/master.adoc
+// * documentation/doc-Migration_Toolkit_for_Virtualization/assemblies/assembly_troubleshooting.adoc
+// * documentation/doc-Forklift/assemblies/assembly_troubleshooting.adoc
 
 [id="known-issues_{context}"]
 = Known issues - in progress

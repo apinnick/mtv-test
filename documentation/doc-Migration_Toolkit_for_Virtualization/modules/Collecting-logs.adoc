@@ -1,19 +1,9 @@
 // Module included in the following assemblies:
 //
-// doc-mtv_2.0/master.adoc
+// * documentation/doc-Migration_Toolkit_for_Virtualization/assemblies/assembly_troubleshooting.adoc
+// * documentation/doc-Forklift/assemblies/assembly_troubleshooting.adoc
 
 [id="collecting-logs_{context}"]
 = Collecting logs - to do
 
 TBD
-
-[discrete]
-== Prerequisites
-
-
-[discrete]
-== Procedure
-
-
-[discrete]
-== Additional resources

@@ -1,19 +1,18 @@
 // Module included in the following assemblies:
 //
-// doc-mtv_2.0/master.adoc
+// * documentation/doc-Migration_Toolkit_for_Virtualization/assemblies/assembly_migrating-vms-web-console.adoc
+// * documentation/doc-Forklift/assemblies/assembly_migrating-vms-web-console.adoc
 
 [id="running-migration-plan_{context}"]
 = Running a migration plan
 
 You can run a migration plan and view its progress in the web console.
 
-[discrete]
-== Prerequisites
+.Prerequisites
 
 * The VMware VMs must be powered off.
 
-[discrete]
-== Procedure
+.Procedure
 
 . In the web console, navigate to *Migration plans*.
 +

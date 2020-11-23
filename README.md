@@ -27,7 +27,7 @@ Variables cannot be used in shell or code examples unless you include the "attri
 	# ls {VariableName}
 	----
 
-Hide or show specific blocks, paragraphs, warnings or chapters via special variable called "build". Its value can be set either to "downstream" or "upstream":
+You can hide or show specific blocks, paragraphs, warnings or chapters with the `build` variable. Its value can be set to "downstream" or "upstream":
 
 	ifeval::["{build}" == "upstream"]
 	This content is only relevant for Forklift.

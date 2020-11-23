@@ -87,7 +87,7 @@ Below is the list of generated documentation versions.
 </table>
 
 > info ""
-> These guides are created from the contents of the repository under [`documentation/`](https://github.com/openshift-kni/baremetal-deploy/tree/master/documentation) folder.
+> These guides are created from the contents of the repository under [`documentation/`](https://github.com/apinnick/mtv-test/tree/master/documentation) folder.
 
 ### Development Draft
 

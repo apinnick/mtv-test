@@ -33,9 +33,9 @@ Hide or show specific blocks, paragraphs, warnings or chapters via special varia
 	This content is only relevant for Forklift.
 	endif::[]
 
-### Running a Jekyll container
+### Previewing changes in a container
 
-You can test the changes to this repository by running a Jekyll container.
+You can preview the changes to this repository by running a Jekyll container.
 
 - Clone repository, check out the source branch, and prepare the Jekyll site:
 
@@ -59,6 +59,4 @@ You can test the changes to this repository by running a Jekyll container.
   podman run -it --rm --name jekyll -p 4000:4000 -v $(pwd):/srv/jekyll jekyll/jekyll jekyll serve --watch --future
   ```
 
-### View the site
-
-Visit `http://0.0.0.0:4000` in your local browser.
+- To view the site, navigate to `http://0.0.0.0:4000` in a web browser.

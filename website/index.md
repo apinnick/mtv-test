@@ -8,7 +8,7 @@ tags: [mtv, openshift virtualization, upstream, documentation]
 
 ### Documentation
 
-Below is the list of generated documentation versions.
+The following documentation versions are available.
 
 <table style="width:100%">
   <tr>
@@ -85,7 +85,7 @@ Below is the list of generated documentation versions.
 </table>
 
 > info ""
-> These guides are created from the contents of the repository under [`documentation/`](https://github.com/apinnick/mtv-test/tree/master/documentation) folder.
+> These guides are created from the [`documentation/doc-Forklift`](https://github.com/apinnick/mtv-test/tree/master/documentation/doc-Forklift) folder.
 
 ### Development Draft
 

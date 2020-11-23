@@ -10,7 +10,7 @@
 
 include::modules/mtv-attributes.adoc[]
 
-{project-first} enables you to migrate a large number of virtual machines from VMware vSphere to {virt}.
+{project-full} ({project-short}) enables you to migrate a large number of virtual machines from VMware vSphere to {virt}.
 
 You can download the VMware provider data collected by {project-short} and upload it to the Migration Analytics service on link:https://cloud.redhat.com/migrations/migration-analytics[cloud.redhat.com] for a detailed workload analysis report and migration recommendations.
 

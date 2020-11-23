@@ -1,6 +1,7 @@
 // Module included in the following assemblies:
 //
-// doc-mtv_2.0/master.adoc
+// * documentation/doc-Migration_Toolkit_for_Virtualization/master.adoc
+// * documentation/doc-Forklift/master.adoc
 
 [id="about-migration-analytics-report_{context}"]
 = About the Migration Analytics report

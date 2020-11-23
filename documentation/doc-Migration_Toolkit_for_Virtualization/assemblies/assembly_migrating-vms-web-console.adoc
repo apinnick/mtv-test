@@ -1,6 +1,7 @@
 // This assembly is included in the following assemblies:
 //
-// <List assemblies here, each on a new line>
+// * documentation/doc-Migration_Toolkit_for_Virtualization/master.adoc
+// * documentation/doc-Forklift/master.adoc
 
 // This assembly can be included from other assemblies using the following
 // include statement:
@@ -38,8 +39,13 @@ You can add providers, create network and storage mappings, and create and run a
 [id="adding-providers_{context}"]
 == Adding providers
 
-include::../modules/Adding-provider.adoc[leveloffset=+2]
+You must add an {virt} and a VMware provider in the web console.
+
 :migrating-vms-web-console!:
+:context: virt-provider
+:virt-provider:
+include::../modules/Adding-provider.adoc[leveloffset=+2]
+:virt-provider!:
 :context: vmware-provider
 :vmware-provider:
 include::../modules/Adding-provider.adoc[leveloffset=+2]
@@ -51,14 +57,14 @@ include::../modules/Adding-provider.adoc[leveloffset=+2]
 You must create mappings to map the source and target networks and storage.
 
 :migrating-vms-web-console!:
-:context: mtv-network
-:mtv-network:
+:context: network
+:network:
 include::../modules/Creating-mappings.adoc[leveloffset=+2]
-:mtv-network!:
-:context: mtv-storage
-:mtv-storage:
+:network!:
+:context: storage
+:storage:
 include::../modules/Creating-mappings.adoc[leveloffset=+2]
-:mtv-storage!:
+:storage!:
 :migrating-vms-web-console:
 // include::../modules/Creating-hooks.adoc[leveloffset=+2]
 include::../modules/Creating-migration-plan.adoc[leveloffset=+1]

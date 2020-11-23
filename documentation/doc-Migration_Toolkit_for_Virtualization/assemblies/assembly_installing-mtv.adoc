@@ -1,6 +1,7 @@
 // This assembly is included in the following assemblies:
 //
-// * doc-Migration_Toolkit_for_Virtualization/master.adoc
+// * documentation/doc-Migration_Toolkit_for_Virtualization/master.adoc
+// * documentation/doc-Forklift/master.adoc
 
 // This assembly can be included from other assemblies using the following
 // include statement:

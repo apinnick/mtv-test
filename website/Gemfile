@@ -15,10 +15,15 @@ gem "jekyll-redirect-from"
 gem "jekyll-sitemap"
 gem "jekyll-tagging"
 gem 'jekyll-seo-tag'
-gem "jekyll", ">= 4.0.0"
+gem "jekyll"
 gem "premonition", ">= 4.0.0"
 gem "pygments.rb"
 gem "rake"
+gem "jekyll-gist"
+gem "jekyll-remote-theme"
+gem "github-pages"
+gem "jekyll-github-metadata"
+gem "jekyll-rtd-theme"
 
 
 # gem "rails"

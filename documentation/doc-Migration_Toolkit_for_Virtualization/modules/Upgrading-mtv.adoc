@@ -6,11 +6,3 @@
 = Upgrading the {project-full} - to do
 
 TBD
-
-[discrete]
-== Prerequisites
-
-
-[discrete]
-== Procedure
-

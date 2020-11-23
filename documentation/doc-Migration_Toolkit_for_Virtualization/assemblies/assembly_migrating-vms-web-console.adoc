@@ -26,7 +26,7 @@
 // If the assembly covers a task, start the title with a verb in the gerund
 // form, such as Creating or Configuring.
 [id='migrating-vms-web-console_{context}']
-= Migrating virtual machines with the {mtv-short} web console
+= Migrating virtual machines with the web console
 
 // The `context` attribute enables module reuse. Every module's ID
 // includes {context}, which ensures that the module has a unique ID even if

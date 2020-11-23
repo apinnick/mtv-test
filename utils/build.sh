@@ -16,7 +16,7 @@ DOCS=(
 
 # Documents using latest
 STATIC=(
-    'Migration Toolkit for Virtualization'
+    'Forklift'
 )
 
 DEV=(

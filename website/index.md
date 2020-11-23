@@ -6,8 +6,6 @@ tags: [mtv, openshift virtualization, upstream, documentation]
 
 ## Forklift
 
-Forklift is the upstream documentation for Migration Toolkit for Virtualization.
-
 ### Documentation
 
 Below is the list of generated documentation versions.

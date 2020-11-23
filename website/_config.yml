@@ -1,7 +1,7 @@
 # Site settings
 show_downloads: false
 title: 'Forklift'
-description: "Upstream documentation for Migration Toolkit for Virtualization"
+description: "Upstream project for migrating VMware virtual machines to OpenShift Virtualization."
 permalink: pretty
 repository: apinnick/mtv-test
 baseurl: /mtv-test/

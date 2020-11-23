@@ -4,9 +4,38 @@ Forklift is the upstream project for Migration Toolkit for Virtualization.
 
 ## Contributing
 
-You can test the changes to this repository by running a Jekyll container.
+Read the [Guidelines for Red Hat Documentation](https://redhat-documentation.github.io/) before opening a Pull Request.
+
+### Upstream and downstream variables
+
+Use the following variables:
+
+| Variable           | Upstream value                 | Downstream value                     |
+| --------           | --------------                 | ----------------                     |
+| project-short | Forklift | MTV |
+| project-full | Forklift   | Migration{nbsp}Toolkit{nbsp}for{nbsp}Virtualization |
+| project-version | 2.0 | 2.0 |
+| virt     | KubeVirt | OpenShift Virtualization |
+| ocp          | OpenShift{nbsp}Kubernetes{nbsp}Engine | Red{nbsp}Hat{nbsp}OpenShift{nbsp}Container{nbsp}Platform |
+| ocp-version   | 4.6 | 4.6 |
+| ocp-short | OKE | OCP |
+
+Variables cannot be used in shell or code examples unless you include the "attributes" keyword:
+
+	[options="nowrap" subs="+quotes,+attributes"]
+	----
+	# ls {VariableName}
+	----
+
+Hide or show specific blocks, paragraphs, warnings or chapters via special variable called "build". Its value can be set either to "downstream" or "upstream":
+
+	ifeval::["{build}" == "upstream"]
+	This content is only relevant for Forklift.
+	endif::[]
 
 ### Running a Jekyll container
+
+You can test the changes to this repository by running a Jekyll container.
 
 - Clone repository, check out the source branch, and prepare the Jekyll site:
 
@@ -16,7 +45,7 @@ You can test the changes to this repository by running a Jekyll container.
   for i in Gemfile.lock; do touch ${i} && chmod 777 ${i}; done
   ```
 
-- On a SELinux enabled OS:
+- On am SELinux-enabled OS:
 
   ```console
   podman run -it --rm --name jekyll -p 4000:4000 -v $(pwd):/srv/jekyll:Z jekyll/jekyll jekyll serve --watch --future

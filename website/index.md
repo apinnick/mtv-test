@@ -13,7 +13,7 @@ The following documentation versions are available.
 <table style="width:100%">
   <tr>
     <th>Document</th>
-    <th>Access</th>
+    <th>Format/release</th>
   </tr>
 
 {% for doc in site.data.versioned %}

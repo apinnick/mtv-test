@@ -7,7 +7,7 @@
 = Adding the VMware provider
 
 You can add the VMware provider in the web console.
-endif::[]
+
 
 .Prerequisites
 

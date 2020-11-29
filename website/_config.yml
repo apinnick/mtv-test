@@ -34,6 +34,9 @@ kramdown:
     block:
       line_numbers: false
       start_line: 1
+
+remote_theme: pmarsceill/just-the-docs
+
 # theme: jekyll-rtd-theme
 # title: Forklift
 # repo_url: 'https://github.com/apinnick/mtv-test'

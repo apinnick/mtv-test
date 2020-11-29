@@ -13,6 +13,7 @@ gem "jekyll-asciidoc"
 gem "jekyll-feed"
 gem "jekyll-paginate"
 gem "jekyll-redirect-from"
+gem "jekyll-remote-theme"
 gem "jekyll-sitemap"
 gem "jekyll-tagging"
 gem 'jekyll-seo-tag'

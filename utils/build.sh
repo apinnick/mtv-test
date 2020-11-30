@@ -36,11 +36,11 @@ build_for_release() {
     basefile=$(basename $(readlink "documentation/${doc}.adoc"))
 
     # Build the documentation
-    asciidoctor -a release="${release}" -a toc=left ${extraargs} -b xhtml5 -d book -B "documentation/${basedir}/" "documentation/${basedir}/${basefile}" -o "${doc}.html" -D "../../website/${release}" 2>&1 | grep -v 'Try: gem'
+    asciidoctor -a release="${release}" -a toc=left ${extraargs} -b xhtml5 -d book -B "documentation/${basedir}/" "documentation/${basedir}/${basefile}" -o "${doc}.html" -D "./${release}" 2>&1 | grep -v 'Try: gem'
     myrc=${?}
 
     # Build the documentation PDF
-    asciidoctor-pdf -a release="${release}" -a toc=left ${extraargs} -d book -B "documentation/${basedir}/" "documentation/${basedir}/${basefile}" -o "${doc}.pdf" -D "../../website/${release}" 2>&1 | grep -v 'Try: gem'
+    asciidoctor-pdf -a release="${release}" -a toc=left ${extraargs} -d book -B "documentation/${basedir}/" "documentation/${basedir}/${basefile}" -o "${doc}.pdf" -D "./${release}" 2>&1 | grep -v 'Try: gem'
 }
 
 RC=0

@@ -12,29 +12,7 @@ plugins: [jekyll-paginate, jekyll-asciidoc, jekyll-redirect-from, jekyll-feed, j
 # Site settings
 future: false
 
-# Build settings
-markdown: kramdown
-type: website
-
-exclude:
-  - GUIDELINES.md
-  - README.md
-  - TODO.md
-  - .history
-
-tag_page_layout: tag
-tag_page_dir: /tag/
-
-kramdown:
-  input: GFM
-  syntax_highlighter_opts:
-    css_class: 'highlight'
-    span:
-      line_numbers: false
-    block:
-      line_numbers: false
-      start_line: 1
-
+title: "Forklift"
 remote_theme: pmarsceill/just-the-docs
 
 # Enable or disable the site search

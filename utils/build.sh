@@ -26,7 +26,8 @@ DEV=(
 LATEST=$(echo ${RELEASES} | tr " " "\n" | sort -V -r | head -1)
 
 build_for_release() {
-    doc="${1}"
+    # doc="${1}"\
+    doc="Forklift"
     release="${2}"
     extraargs="${3}"
 

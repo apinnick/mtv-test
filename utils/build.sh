@@ -67,7 +67,7 @@ for release in ${DEVRELEASE}; do
 done
 
 # Build JSON of generated documentation pages
-TARGET="website/_data"
+TARGET="./_data"
 mkdir -p ${TARGET}
 
 # Build HTML page for all generated docs

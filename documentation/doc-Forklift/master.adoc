@@ -1,4 +1,7 @@
 = Forklift
+:page-layout: default
+:page-permalink: /sample/
+:url-asciidoctor: http://asciidoctor.org
 :imagesdir: images
 :vernum: 2.0-beta
 :toc: left

@@ -120,8 +120,8 @@ ${doc}-${release}:
     done
 done
 
-rm -f website/latest
-ln -s ${release} website/latest
+rm -f latest
+ln -s ${release} ./latest
 
 # TODO: CHECK why RC != 0 with no errors website (despite of gem)
 RC=0

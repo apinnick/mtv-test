@@ -2,10 +2,10 @@
 # Builds documentation for each release in both HTML and PDF versions
 
 # Space separated version list to build
-RELEASES="2.0-beta"
+RELEASES=""
 
 # Devel releases for static documents and devel docs
-DEVRELEASE="2.0-beta"
+DEVRELEASE=""
 
 # STATIC Release
 STATICRELEASE="${DEVRELEASE}"
@@ -33,8 +33,8 @@ build_for_release() {
 
     echo "Building document ${doc} for release ${release}"
 
-    basedir=$(dirname $(readlink "${doc}.adoc"))
-    basefile=$(basename $(readlink "${doc}.adoc"))
+    basedir=$(dirname $(readlink "doc-Forklift/${doc}.adoc"))
+    basefile=$(basename $(readlink "doc-Forklift/${doc}.adoc"))
 
     # Build the documentation
     asciidoctor -a release="${release}" -a toc=left ${extraargs} -b xhtml5 -d book -B "${basedir}/" "${basedir}/${basefile}" -o "${doc}.html" -D "./${release}" 2>&1 | grep -v 'Try: gem'

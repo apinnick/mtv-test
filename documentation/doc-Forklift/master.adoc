@@ -28,15 +28,49 @@ include::modules/About-mtv.adoc[leveloffset=+1]
 
 // include::assemblies/Upgrading-mtv.adoc[leveloffset=+1]
 
-include::assemblies/assembly_planning-migration.adoc[leveloffset=+1]
-include::assemblies/assembly_installing-mtv.adoc[leveloffset=+1]
+== Planning the migration
+
+TBD
+
+== Installing {project-full}
+
+You can install the {project-first} by using the {virt} web console or the CLI.
+
+Then you can create a VMware Virtual Disk Development Kit (VDDK) image. {project-short} uses VDDK to copy the source disks.
+
+include::modules/Installing-mtv-console.adoc[leveloffset=+2]
+include::modules/Installing-mtv-cli.adoc[leveloffset=+2]
+include::modules/Adding-vddk-to-mtv.adoc[leveloffset=+2]
 
 [id="migrating-virtual-machines_{context}"]
 == Migrating virtual machines
 
-include::assemblies/assembly_migrating-vms-web-console.adoc[leveloffset=+2]
-include::modules/Migrating-virtual-machines-cli.adoc[leveloffset=+2]
+You can add providers, create network and storage mappings, and create and run a migration plan in the web console.
 
-include::assemblies/assembly_using-migration-analytics.adoc[leveloffset=+1]
-include::assemblies/assembly_troubleshooting.adoc[leveloffset=+1]
+[id="adding-providers_{context}"]
+=== Adding providers
+
+You must add the {virt} and VMware providers in the web console.
+
+include::modules/Adding-virt-provider.adoc[leveloffset=+3]
+include::modules/Adding-vmware-provider.adoc[leveloffset=+3]
+
+[id="creating-mappings_{context}"]
+=== Creating mappings
+
+You must create mappings to map the source and target networks and storage.
+
+include::modules/Creating-network-mapping.adoc[leveloffset=+3]
+include::modules/Creating-storage-mapping.adoc[leveloffset=+3]
+
+// include::modules/Creating-hooks.adoc[leveloffset=+2]
+include::modules/Creating-migration-plan.adoc[leveloffset=+2]
+include::modules/Running-migration-plan.adoc[leveloffset=+2]
+
+
+// include::assemblies/assembly_migrating-vms-web-console.adoc[leveloffset=+2]
+// include::modules/Migrating-virtual-machines-cli.adoc[leveloffset=+2]
+//
+// include::assemblies/assembly_using-migration-analytics.adoc[leveloffset=+1]
+// include::assemblies/assembly_troubleshooting.adoc[leveloffset=+1]
 :mtv!:

@@ -1,9 +1,3 @@
----
-layout: default
-title: About Forklift
-nav_order: 2
-has_children: true
----
 // Module included in the following assemblies:
 //
 // * documentation/doc-Forklift/master.adoc

@@ -1,9 +1,3 @@
----
-layout: default
-title: Adding VDDK
-parent: About Forklift
-nav_order: 2
----
 // Module included in the following assemblies:
 //
 // * documentation/doc-Forklift/assemblies/assembly_installing-mtv.adoc

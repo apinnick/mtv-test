@@ -22,7 +22,6 @@ Use the following variables:
 
 Variables cannot be used in shell or code examples unless you include the "attributes" keyword:
 
-	[options="nowrap" subs="+quotes,+attributes"]
 	----
 	# ls {VariableName}
 	----
@@ -33,30 +32,14 @@ You can hide or show specific blocks, paragraphs, warnings or chapters with the 
 	This content is only relevant for Forklift.
 	endif::[]
 
-### Previewing changes in a container
+### Previewing changes
 
-You can preview the changes to this repository by running a Jekyll container.
+You can create a local HTML build to view changes.
 
-- Clone repository, check out the source branch, and prepare the Jekyll site:
+1. In the `/root` directory, create an HTML build:
+    ```console
+    $ make
+    ```
+    The HTML build is created in a `/build` directory.
 
-  ```console
-  git clone -b source https://github.com/apinnick/mtv-test.git && cd mtv-test
-  for i in .jekyll-cache _site; do mkdir ${i} && chmod 777 ${i}; done
-  for i in Gemfile.lock; do touch ${i} && chmod 777 ${i}; done
-  ```
-
-- If your operating system is SELinux-enabled:
-
-  ```console
-  podman run -it --rm --name jekyll -p 4000:4000 -v $(pwd):/srv/jekyll:Z jekyll/jekyll jekyll serve --watch --future
-  ```
-
-  **NOTE**: The Z at the end of the volume (-v) will relabel its contents so that it can be written from within the container, like running `chcon -Rt svirt_sandbox_file_t -l s0:c1,c2` yourself. Be sure that you have changed your present working directory to the git cloned directory as shown above.
-
-- If your operating system is not SELinux-enabled:
-
-  ```console
-  podman run -it --rm --name jekyll -p 4000:4000 -v $(pwd):/srv/jekyll jekyll/jekyll jekyll serve --watch --future
-  ```
-
-- Navigate to `http://0.0.0.0:4000` in a web browser to view the site preview.
+2. Open `/build/mtv/index-upstream.html` in a web browser.

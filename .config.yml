@@ -12,7 +12,7 @@ plugins: [jekyll-paginate, jekyll-asciidoc, jekyll-redirect-from, jekyll-feed, j
 future: false
 
 title: "Forklift"
-# remote_theme: pmarsceill/just-the-docs
+remote_theme: pmarsceill/just-the-docs
 
 # Enable or disable the site search
 # Supports true (default) or false

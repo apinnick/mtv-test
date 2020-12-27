@@ -1,0 +1,97 @@
+<div class="paragraph">
+<p>You can create a migration plan in the web console.</p>
+</div>
+<div class="paragraph">
+<p>A migration plan allows you to group virtual machines that should be migrated together or with the same migration parameters, for example, a percentage of the members of a cluster or a complete application.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>The migration network supports migration.</p>
+</li>
+<li>
+<p>The web console has source and target providers.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the web console, navigate to <strong>Migration plans</strong> and click <strong>Create migration plan</strong>.</p>
+</li>
+<li>
+<p>Fill in the following fields in the <strong>General settings</strong> screen:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Plan name</strong>: Plan name that is displayed in the web console.</p>
+</li>
+<li>
+<p><strong>Plan description</strong>: Optional. Brief description of the migration plan.</p>
+</li>
+<li>
+<p><strong>Source provider</strong>: Select a VMware provider.</p>
+</li>
+<li>
+<p><strong>Target provider</strong>: Select the {virt} provider.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Filter the VMs that you want to migrate by selecting data centers, clusters, or folders.</p>
+</li>
+<li>
+<p>Select the VMs to migrate. You can click each VM to view its migration risk assessment.</p>
+</li>
+<li>
+<p>Select an existing storage mapping or create a new storage mapping.</p>
+</li>
+<li>
+<p>If you want to create a new storage mapping:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Select a data store from the <strong>Source datastores</strong> list and a storage class from the <strong>Target storage classes</strong> list.</p>
+</li>
+<li>
+<p>Click <strong>Add</strong> to create additional storage mappings or to map multiple data stores to a single storage class.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Select an existing network mapping or create a new network mapping.</p>
+</li>
+<li>
+<p>If you want to create a new network mapping:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Select a network from the <strong>Source networks</strong> list and a network from the <strong>Target networks</strong> list.</p>
+</li>
+<li>
+<p>Click <strong>Add</strong> to create additional network mappings or to map multiple source networks to a single target network.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Review your migration plan and click <strong>Finish</strong>.</p>
+<div class="paragraph">
+<p>The migration plan is saved in the migration plan list.</p>
+</div>
+</li>
+</ol>
+</div>

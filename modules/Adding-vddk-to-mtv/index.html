@@ -1,0 +1,128 @@
+<div class="paragraph">
+<p>You can create a VDDK image and store it in a private image registry. Then, you can add the image to the <code>v2v-vmware</code> ConfigMap.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Storing the VDDK image in a public registry might violate the terms of the VMware license.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<h2 id="prerequisites" class="discrete">Prerequisites</h2>
+<div class="ulist">
+<ul>
+<li>
+<p>An internal <a href="https://docs.openshift.com/container-platform/{ocp-version}/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html">{ocp} image registry</a> or a secure <a href="https://docs.openshift.com/container-platform/{ocp-version}/registry/registry-options.html">external registry</a></p>
+</li>
+<li>
+<p>Access to the image registry from your {virt} environment</p>
+</li>
+<li>
+<p>Podman installed</p>
+</li>
+</ul>
+</div>
+<h2 id="procedure" class="discrete">Procedure</h2>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create and navigate to a temporary directory:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ mkdir /tmp/&lt;dir_name&gt; &amp;&amp; cd /tmp/&lt;dir_name&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In a browser, navigate to <a href="https://code.vmware.com/home">VMware code</a> and click <strong>SDKs</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Compute Virtualization</strong> section, click <strong>Virtual Disk Development Kit (VDDK)</strong>.</p>
+</li>
+<li>
+<p>Select the VDDK version that corresponds to your VMware vSphere version, for example, VDDK 7.0 for vSphere 7.0.</p>
+</li>
+<li>
+<p>Click <strong>Download</strong> and save the VDDK archive in the temporary directory.</p>
+</li>
+<li>
+<p>Extract the VDDK archive:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ tar -xzf VMware-vix-disklib-&lt;version&gt;.x86_64.tar.gz</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>Dockerfile</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ cat &gt; Dockerfile &lt;&lt;EOF
+FROM busybox:latest
+COPY vmware-vix-disklib-distrib /vmware-vix-disklib-distrib
+RUN mkdir -p /opt
+ENTRYPOINT ["cp", "-r", "/vmware-vix-disklib-distrib", "/opt"]
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build the image:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ podman build . -t &lt;registry_route_or_server_path&gt;/vddk:&lt;tag&gt; <b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Specify your image registry:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For an internal {ocp} registry, specify the internal registry route, for example, <code>image-registry.openshift-image-registry.svc:5000/openshift/vddk:&lt;tag&gt;</code>.</p>
+</li>
+<li>
+<p>For an external registry, specify the server name, path, and tag, for example, <code>server.example.com:5000/vddk:&lt;tag&gt;</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Push the image to the registry:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ podman push &lt;registry_route_or_server_path&gt;/vddk:&lt;tag&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Edit the <code>v2v-vmware</code> ConfigMap in the <strong>openshift-cnv</strong> project:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ oc edit configmap v2v-vmware -n openshift-cnv</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the <code>vddk-init-image</code> parameter to the <code>data</code> stanza:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">...
+data:
+  vddk-init-image: &lt;registry_route_or_server_path&gt;/vddk:&lt;tag&gt;</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>

@@ -1,0 +1,849 @@
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#about-mtv_mtv">About Forklift</a></li>
+<li><a href="#planning-the-migration">Planning the migration</a></li>
+<li><a href="#installing-forklift">Installing Forklift</a>
+<ul class="sectlevel2">
+<li><a href="#installing-mtv-console_mtv">Installing Forklift with the web console</a></li>
+<li><a href="#installing-mtv-cli_mtv">Installing Forklift from the CLI</a></li>
+<li><a href="#adding-vddk-to-mtv_mtv">Adding a VDDK image to Forklift</a></li>
+</ul>
+</li>
+<li><a href="#migrating-virtual-machines_mtv">Migrating virtual machines</a>
+<ul class="sectlevel2">
+<li><a href="#adding-providers_mtv">Adding providers</a>
+<ul class="sectlevel3">
+<li><a href="#adding-virt-provider_mtv">Adding the KubeVirt provider</a></li>
+<li><a href="#adding-vmware-provider_mtv">Adding the VMware provider</a></li>
+</ul>
+</li>
+<li><a href="#creating-mappings_mtv">Creating mappings</a>
+<ul class="sectlevel3">
+<li><a href="#creating-network-mapping_mtv">Creating a network mapping</a></li>
+<li><a href="#creating-storage-mapping_mtv">Creating a storage mapping</a></li>
+</ul>
+</li>
+<li><a href="#creating-a-migration-plan_mtv">Creating a migration plan</a></li>
+<li><a href="#running-migration-plan_mtv">Running a migration plan</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<img src="./images/icons/important.png" alt="Important">
+</td>
+<td class="content">
+<div class="title">Draft documentation</div>
+<div class="paragraph">
+<p>This draft document is a work in progress.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>It might not be complete.</p>
+</li>
+<li>
+<p>It might be not accurate.</p>
+</li>
+<li>
+<p>It might break your environment.</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Forklift enables you to migrate a large number of virtual machines from VMware vSphere to KubeVirt.</p>
+</div>
+<div class="paragraph">
+<p>You can download the VMware provider data collected by Forklift and upload it to the Migration Analytics service on <a href="https://cloud.redhat.com/migrations/migration-analytics">cloud.redhat.com</a> for a detailed workload analysis report and migration recommendations.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="about-mtv_mtv">About Forklift</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Placeholder for diagram</p>
+</div>
+<div class="paragraph">
+<div class="title">Custom resources</div>
+<p>Forklift creates the following custom resources (CRs):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Provider</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Created when you add a source or target provider</p>
+</li>
+<li>
+<p>Stores provider attributes in order to connect to and interact with the providers</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Plan</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Created when you create a migration plan</p>
+</li>
+<li>
+<p>Contains a list of VMs that are migrated together with the same migration parameters</p>
+</li>
+<li>
+<p>Selects VMs to fit the available migration resources until all VMs are migrated</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Mapping</code>: Created when you map source and target networks or source and target storage</p>
+</li>
+<li>
+<p><code>Migration</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Created when you run a migration plan</p>
+</li>
+<li>
+<p>Aggregates the migration progress</p>
+<div class="paragraph">
+<p>If a virtual machine fails to migrate, you can run a new migration with the same migration plan. Only the virtual machines that have not migrated will be migrated.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Services</div>
+<p>Forklift creates the following services:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Provider Inventory:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Connects to the source and target providers</p>
+</li>
+<li>
+<p>Maintains a local inventory for mappings and plans</p>
+</li>
+<li>
+<p>Separate provider inventory pods for each provider enable scalability</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Validation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Validates the suitability of a VM for migration to KubeVirt by applying rules</p>
+</li>
+<li>
+<p>Triggered by the Provider Inventory service whenever a VM configuration change is detected</p>
+</li>
+<li>
+<p>Stores the VM validation status</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>User Interface:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Enables you to manipulate the Forklift CRs</p>
+</li>
+<li>
+<p>Indicates the state of the CRs</p>
+</li>
+<li>
+<p>Displays the progress of a migration</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Controller: Implements the logic to reconcile the CRs with the state defined by the user</p>
+<div class="paragraph">
+<p>For example, when you create a Plan, the controllers validate it and add a status label. If a Plan fails validation, its status is <code>Not ready</code> and the Plan cannot be used to perform a migration.</p>
+</div>
+</li>
+<li>
+<p>Aggregates the status of related CRs to provide a holistic and consistent view of the state of a migration</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="planning-the-migration">Planning the migration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TBD</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installing-forklift">Installing Forklift</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can install the Forklift by using the KubeVirt web console or the CLI.</p>
+</div>
+<div class="paragraph">
+<p>Then you can create a VMware Virtual Disk Development Kit (VDDK) image. Forklift uses VDDK to copy the source disks.</p>
+</div>
+<div class="sect2">
+<h3 id="installing-mtv-console_mtv">Installing Forklift with the web console</h3>
+<div class="paragraph">
+<p>You can install the Forklift by using the KubeVirt web console.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>Admin privileges</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the KubeVirt web console, click <strong>Operators</strong> &#8594; <strong>OperatorHub</strong>.</p>
+</li>
+<li>
+<p>Use the <strong>Filter by keyword</strong> field to find the <strong>Forklift Operator</strong>.</p>
+</li>
+<li>
+<p>Select the <strong>Forklift Operator</strong> and click <strong>Install</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Install Operator</strong> page, click <strong>Install</strong>.</p>
+<div class="paragraph">
+<p>On the <strong>Installed Operators</strong> page, the <strong>Forklift Operator</strong> appears in the <strong>openshift-migration</strong> project with the status <strong>Succeeded</strong>.</p>
+</div>
+</li>
+<li>
+<p>Click <strong>Forklift Operator</strong>.</p>
+</li>
+<li>
+<p>Under <strong>Provided APIs</strong>, locate the <strong>VirtController</strong> tile, and click <strong>Create Instance</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Workloads</strong> &#8594; <strong>Pods</strong> to verify that the Provider Inventory, Validation, User Interface, and Controller pods are running.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="installing-mtv-cli_mtv">Installing Forklift from the CLI</h3>
+<div class="paragraph">
+<p>You can install the Forklift from the CLI.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html">OpenShift CLI</a> installed</p>
+</li>
+<li>
+<p>Admin privileges</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the OpenShift&#160;Kubernetes&#160;Engine cluster and create an <code>openshift-migration</code> project:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ cat &lt;&lt; EOF | oc apply -f -
+---
+apiVersion: project.openshift.io/v1
+kind: Project
+metadata:
+  name: openshift-migration
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create an <code>OperatorGroup</code> object called <code>migration</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ cat &lt;&lt; EOF | oc apply -f -
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: migration
+  namespace: openshift-migration
+spec:
+  targetNamespaces:
+    - openshift-migration
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>Subscription</code> object for the <code>virt-operator</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ cat &lt;&lt; EOF | oc apply -f -
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: virt-operator
+  namespace: openshift-migration
+spec:
+  channel: development
+  installPlanApproval: Automatic
+  name: virt-operator
+  source: konveyor-for-vms
+  sourceNamespace: openshift-marketplace
+  startingCSV: "konveyor-virt-operator.v99.0.0"
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>VirtController</code> object:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ cat &lt;&lt; EOF | oc apply -f -
+---
+apiVersion: virt.konveyor.io/v1alpha1
+kind: VirtController
+metadata:
+  name: virt-controller
+  namespace: openshift-migration
+spec:
+  olm_managed: true
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>View the resources created by the <code>VirtController</code> object:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ oc get pods -n openshift-migration</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example output</div>
+<div class="content">
+<pre>TBD</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-vddk-to-mtv_mtv">Adding a VDDK image to Forklift</h3>
+<div class="paragraph">
+<p>You can create a VDDK image and store it in a private image registry. Then, you can add the image to the <code>v2v-vmware</code> ConfigMap.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note">
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Storing the VDDK image in a public registry might violate the terms of the VMware license.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<h4 id="prerequisites" class="discrete">Prerequisites</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>An internal <a href="https://docs.openshift.com/container-platform/4.6/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html">OpenShift&#160;Kubernetes&#160;Engine image registry</a> or a secure <a href="https://docs.openshift.com/container-platform/4.6/registry/registry-options.html">external registry</a></p>
+</li>
+<li>
+<p>Access to the image registry from your KubeVirt environment</p>
+</li>
+<li>
+<p>Podman installed</p>
+</li>
+</ul>
+</div>
+<h4 id="procedure" class="discrete">Procedure</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create and navigate to a temporary directory:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ mkdir /tmp/&lt;dir_name&gt; &amp;&amp; cd /tmp/&lt;dir_name&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In a browser, navigate to <a href="https://code.vmware.com/home">VMware code</a> and click <strong>SDKs</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Compute Virtualization</strong> section, click <strong>Virtual Disk Development Kit (VDDK)</strong>.</p>
+</li>
+<li>
+<p>Select the VDDK version that corresponds to your VMware vSphere version, for example, VDDK 7.0 for vSphere 7.0.</p>
+</li>
+<li>
+<p>Click <strong>Download</strong> and save the VDDK archive in the temporary directory.</p>
+</li>
+<li>
+<p>Extract the VDDK archive:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ tar -xzf VMware-vix-disklib-&lt;version&gt;.x86_64.tar.gz</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>Dockerfile</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ cat &gt; Dockerfile &lt;&lt;EOF
+FROM busybox:latest
+COPY vmware-vix-disklib-distrib /vmware-vix-disklib-distrib
+RUN mkdir -p /opt
+ENTRYPOINT ["cp", "-r", "/vmware-vix-disklib-distrib", "/opt"]
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Build the image:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ podman build . -t &lt;registry_route_or_server_path&gt;/vddk:&lt;tag&gt; <img src="./images/icons/callouts/1.png" alt="1"></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><img src="./images/icons/callouts/1.png" alt="1"></td>
+<td>Specify your image registry:
+<div class="ulist">
+<ul>
+<li>
+<p>For an internal OpenShift&#160;Kubernetes&#160;Engine registry, specify the internal registry route, for example, <code>image-registry.openshift-image-registry.svc:5000/openshift/vddk:&lt;tag&gt;</code>.</p>
+</li>
+<li>
+<p>For an external registry, specify the server name, path, and tag, for example, <code>server.example.com:5000/vddk:&lt;tag&gt;</code>.</p>
+</li>
+</ul>
+</div></td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Push the image to the registry:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ podman push &lt;registry_route_or_server_path&gt;/vddk:&lt;tag&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Edit the <code>v2v-vmware</code> ConfigMap in the <strong>openshift-cnv</strong> project:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ oc edit configmap v2v-vmware -n openshift-cnv</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the <code>vddk-init-image</code> parameter to the <code>data</code> stanza:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">...
+data:
+  vddk-init-image: &lt;registry_route_or_server_path&gt;/vddk:&lt;tag&gt;</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="migrating-virtual-machines_mtv">Migrating virtual machines</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can add providers, create network and storage mappings, and create and run a migration plan in the web console.</p>
+</div>
+<div class="sect2">
+<h3 id="adding-providers_mtv">Adding providers</h3>
+<div class="paragraph">
+<p>You must add the KubeVirt and VMware providers in the web console.</p>
+</div>
+<div class="sect3">
+<h4 id="adding-virt-provider_mtv">Adding the KubeVirt provider</h4>
+<div class="paragraph">
+<p>You can add the KubeVirt provider in the web console.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="https://docs.openshift.com/container-platform/4.6/authentication/using-service-accounts-in-applications.html"><code>VirtController</code> service account token</a></p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the web console, navigate to <strong>Providers</strong> and click <strong>Add provider</strong>.</p>
+</li>
+<li>
+<p>Select <strong>KubeVirt</strong> from the <strong>Type</strong> list.</p>
+</li>
+<li>
+<p>Fill in the following fields:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Cluster name</strong>: OpenShift cluster name to display in the list of providers</p>
+</li>
+<li>
+<p><strong>URL</strong>: OpenShift cluster API endpoint</p>
+</li>
+<li>
+<p><strong>Service account token</strong>: VirtController service account token</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Check connection</strong> to verify the credentials.</p>
+</li>
+<li>
+<p>Click <strong>Add</strong> to add and save the provider.</p>
+<div class="paragraph">
+<p>The provider appears in the list of providers.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="adding-vmware-provider_mtv">Adding the VMware provider</h4>
+<div class="paragraph">
+<p>You can add the VMware provider in the web console.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>Admin privileges</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the web console, navigate to <strong>Providers</strong> and click <strong>Add provider</strong>.</p>
+</li>
+<li>
+<p>Select <strong>VMware</strong> from the <strong>Type</strong> list.</p>
+</li>
+<li>
+<p>Fill in the following fields:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Name</strong>: vCenter name to display in the list of providers</p>
+</li>
+<li>
+<p><strong>Hostname</strong>: vCenter host name or IP address</p>
+</li>
+<li>
+<p><strong>Username</strong>: vCenter admin user name, for example, <code>administrator@vsphere.local</code></p>
+</li>
+<li>
+<p><strong>Password</strong>: vCenter password</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Check connection</strong> to verify the credentials.</p>
+</li>
+<li>
+<p>Click <strong>Add</strong> to add and save the provider.</p>
+<div class="paragraph">
+<p>The provider appears in the list of providers.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating-mappings_mtv">Creating mappings</h3>
+<div class="paragraph">
+<p>You must create mappings to map the source and target networks and storage.</p>
+</div>
+<div class="sect3">
+<h4 id="creating-network-mapping_mtv">Creating a network mapping</h4>
+<div class="paragraph">
+<p>You can create a network mapping to map VMware networks to KubeVirt networks.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note">
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You cannot map an opaque network to a KubeVirt network.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the web console, navigate to <strong>Mappings</strong> &#8594; <strong>Network</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create mapping</strong>.</p>
+</li>
+<li>
+<p>Select a <strong>Source provider</strong> and a <strong>Target provider</strong>.</p>
+</li>
+<li>
+<p>Select a network from the <strong>Source networks</strong> list and from the <strong>Target networks</strong> list.</p>
+</li>
+<li>
+<p>Click <strong>Add</strong> to create additional network mappings or to map multiple source networks to a single target network.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+<div class="paragraph">
+<p>The mapping is displayed in the <strong>Network mappings</strong> list.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="creating-storage-mapping_mtv">Creating a storage mapping</h4>
+<div class="paragraph">
+<p>You can create a storage mapping to map VMware data stores to KubeVirt storage classes.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>The local and shared persistent storage must support VM migration.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the web console, navigate to <strong>Mappings</strong> &#8594; <strong>Storage</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create mapping</strong>.</p>
+</li>
+<li>
+<p>Select a <strong>Source provider</strong> and a <strong>Target provider</strong>.</p>
+</li>
+<li>
+<p>Select a data store from the <strong>Source datastores</strong> list and a storage class from the <strong>Target storage classes</strong> list.</p>
+</li>
+<li>
+<p>Click <strong>Add</strong> to create additional storage mappings or to map multiple data stores to a single storage class.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+<div class="paragraph">
+<p>The mapping is displayed in the <strong>Storage mappings</strong> list.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating-a-migration-plan_mtv">Creating a migration plan</h3>
+<div class="paragraph">
+<p>You can create a migration plan in the web console.</p>
+</div>
+<div class="paragraph">
+<p>A migration plan allows you to group virtual machines that should be migrated together or with the same migration parameters, for example, a percentage of the members of a cluster or a complete application.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>The migration network supports migration.</p>
+</li>
+<li>
+<p>The web console has source and target providers.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the web console, navigate to <strong>Migration plans</strong> and click <strong>Create migration plan</strong>.</p>
+</li>
+<li>
+<p>Fill in the following fields in the <strong>General settings</strong> screen:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Plan name</strong>: Plan name that is displayed in the web console.</p>
+</li>
+<li>
+<p><strong>Plan description</strong>: Optional. Brief description of the migration plan.</p>
+</li>
+<li>
+<p><strong>Source provider</strong>: Select a VMware provider.</p>
+</li>
+<li>
+<p><strong>Target provider</strong>: Select the KubeVirt provider.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Filter the VMs that you want to migrate by selecting data centers, clusters, or folders.</p>
+</li>
+<li>
+<p>Select the VMs to migrate. You can click each VM to view its migration risk assessment.</p>
+</li>
+<li>
+<p>Select an existing storage mapping or create a new storage mapping.</p>
+</li>
+<li>
+<p>If you want to create a new storage mapping:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Select a data store from the <strong>Source datastores</strong> list and a storage class from the <strong>Target storage classes</strong> list.</p>
+</li>
+<li>
+<p>Click <strong>Add</strong> to create additional storage mappings or to map multiple data stores to a single storage class.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Select an existing network mapping or create a new network mapping.</p>
+</li>
+<li>
+<p>If you want to create a new network mapping:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Select a network from the <strong>Source networks</strong> list and a network from the <strong>Target networks</strong> list.</p>
+</li>
+<li>
+<p>Click <strong>Add</strong> to create additional network mappings or to map multiple source networks to a single target network.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Review your migration plan and click <strong>Finish</strong>.</p>
+<div class="paragraph">
+<p>The migration plan is saved in the migration plan list.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-migration-plan_mtv">Running a migration plan</h3>
+<div class="paragraph">
+<p>You can run a migration plan and view its progress in the web console.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>The VMware VMs must be powered off.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the web console, navigate to <strong>Migration plans</strong>.</p>
+<div class="paragraph">
+<p>The <strong>Migration plans</strong> list displays the source and target providers, the number of VMs being migrated, the status of the plan, and a high-level progress bar that shows how many VMs have been migrated.</p>
+</div>
+</li>
+<li>
+<p>Click <strong>Start</strong> beside a migration plan with a <strong>Ready</strong> status to run the plan.</p>
+</li>
+<li>
+<p>To view the <strong>Migration Details by VM</strong> screen, click the name of a migration plan.</p>
+<div class="paragraph">
+<p>This screen displays the migration start and end time, the amount of data copied, and a progress pipeline for each VM being migrated.</p>
+</div>
+</li>
+<li>
+<p>Expand a VM to view the migration steps, elapsed time of each step, and the state.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>

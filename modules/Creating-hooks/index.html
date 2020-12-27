@@ -1,0 +1,32 @@
+<div class="paragraph">
+<p>Hooks are commands that you can run on the target cluster at certain stages of the migration.</p>
+</div>
+<div class="paragraph">
+<p>You can define a hook by using an Ansible playbook or a container image.</p>
+</div>
+<div class="paragraph">
+<p>You can create a hook before a migration plan or while creating a migration plan.</p>
+</div>
+<h2 id="procedure" class="discrete">Procedure</h2>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the web console, navigate to <strong>Hooks</strong> and click <strong>Create hook</strong>.</p>
+</li>
+<li>
+<p>Specify the hook <strong>Name</strong>.</p>
+</li>
+<li>
+<p>Select <strong>Ansible playbook</strong> or <strong>Custom container image</strong> as the <strong>Hook definition</strong>.</p>
+</li>
+<li>
+<p>If you select <strong>Custom container image</strong>, specify the image location, for example, <code>quay.io/github_project/container_name:container_id</code>.</p>
+</li>
+<li>
+<p>Select a migration step and click <strong>Add</strong>.</p>
+<div class="paragraph">
+<p>The new migration hook appears in the <strong>Hooks</strong> list.</p>
+</div>
+</li>
+</ol>
+</div>

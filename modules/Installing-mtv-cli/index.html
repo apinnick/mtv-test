@@ -1,0 +1,104 @@
+<div class="paragraph">
+<p>You can install the {project-full} from the CLI.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p><a href="https://docs.openshift.com/container-platform/{ocp-version}/cli_reference/openshift_cli/getting-started-cli.html">OpenShift CLI</a> installed</p>
+</li>
+<li>
+<p>Admin privileges</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the {ocp} cluster and create an <code>openshift-migration</code> project:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ cat &lt;&lt; EOF | oc apply -f -
+---
+apiVersion: project.openshift.io/v1
+kind: Project
+metadata:
+  name: openshift-migration
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create an <code>OperatorGroup</code> object called <code>migration</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ cat &lt;&lt; EOF | oc apply -f -
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: migration
+  namespace: openshift-migration
+spec:
+  targetNamespaces:
+    - openshift-migration
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>Subscription</code> object for the <code>virt-operator</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ cat &lt;&lt; EOF | oc apply -f -
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: virt-operator
+  namespace: openshift-migration
+spec:
+  channel: development
+  installPlanApproval: Automatic
+  name: virt-operator
+  source: konveyor-for-vms
+  sourceNamespace: openshift-marketplace
+  startingCSV: "konveyor-virt-operator.v99.0.0"
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>VirtController</code> object:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ cat &lt;&lt; EOF | oc apply -f -
+---
+apiVersion: virt.konveyor.io/v1alpha1
+kind: VirtController
+metadata:
+  name: virt-controller
+  namespace: openshift-migration
+spec:
+  olm_managed: true
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>View the resources created by the <code>VirtController</code> object:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-terminal" data-lang="terminal">$ oc get pods -n openshift-migration</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example output</div>
+<div class="content">
+<pre>TBD</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
